@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kitchen{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Inter',sans-serif;
+            background:#f8fafc;
+            color:#1e293b;
+            display:flex;
+            flex-direction:column;
+            min-height:100vh;
+        }
+
+        a{
+            text-decoration:none;
+            color:inherit;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav{
+            background:#fff;
+            border-bottom:1px solid #e2e8f0;
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+        .navbar{
+            max-width:1200px;
+            margin:auto;
+            height:72px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 20px;
+        }
+
+        .logo{
+            font-size:24px;
+            font-weight:700;
+            color:#0f172a;
+        }
+
+        .logo span{
+            color:#16a34a;
+        }
+
+        .menu{
+            display:flex;
+            gap:28px;
+            align-items:center;
+        }
+
+        .menu a{
+            color:#475569;
+            font-weight:500;
+            transition:.25s;
+        }
+
+        .menu a:hover{
+            color:#16a34a;
+        }
+
+        .btn{
+            background:#16a34a;
+            color:white;
+            padding:10px 18px;
+            border-radius:8px;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#15803d;
+        }
+
+        /* ================= MAIN ================= */
+
+        main{
+            flex:1;
+            width:100%;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+            padding:40px 20px;
+        }
+
+        .page-card{
+            background:white;
+            border-radius:18px;
+            padding:30px;
+            box-shadow:0 5px 20px rgba(15,23,42,.05);
+            min-height:500px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer{
+            background:white;
+            border-top:1px solid #e2e8f0;
+            margin-top:50px;
+        }
+
+        .footer{
+            max-width:1200px;
+            margin:auto;
+            padding:22px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            color:#64748b;
+            font-size:15px;
+        }
+
+        .footer-links{
+            display:flex;
+            gap:20px;
+        }
+
+        .footer-links a:hover{
+            color:#16a34a;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width:768px){
+
+            .navbar{
+                flex-direction:column;
+                height:auto;
+                padding:20px;
+                gap:20px;
+            }
+
+            .menu{
+                flex-wrap:wrap;
+                justify-content:center;
+            }
+
+            .footer{
+                flex-direction:column;
+                gap:15px;
+                text-align:center;
+            }
+
+        }
+
+    </style>
+
+    {% block extra_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar">
+
+            <a href="/" class="logo">
+                🍽️ Kitchen<span>.</span>
+            </a>
+
+            <div class="menu">
+                <a href="/">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn">
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn">
+                    Login
+                </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <main>
+
+        <div class="container">
+
+            <div class="page-card">
+
+                {% block content %}
+                {% endblock content %}
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer">
+
+            <div>
+                © 2026 Kitchen Platform. All rights reserved.
+            </div>
+
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Support</a>
+            </div>
+
+        </div>
+
+    </footer>
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+</html>
