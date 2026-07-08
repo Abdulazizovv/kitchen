@@ -3,4 +3,22 @@
 {% block content %}
 
 
+
+Kategoriyalar
+<p>O'zingizga kerakli kategoriyani tanlang:</p>
+
+{% for category in categories %}
+
+<div>
+    <a href="{% url 'category_detail' category.id %}">
+        {{category.title}} | {{category.foods.count}}
+    </a>
+</div>
+
+{% empty %}
+
+Hozircha kategoriyalar mavjud emas! Bir aylanib keling 
+
+{% endfor %}
+
 {% endblock content %}

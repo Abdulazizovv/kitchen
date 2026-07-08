@@ -2,10 +2,30 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from main.models import FoodCategory, Food
 
 
 def index_view(request: HttpRequest):
-    return render(request, "index.html")
+
+    categories = FoodCategory.objects.all()
+
+    context = {
+        "categories": categories
+    }
+
+    return render(request, "index.html", context=context)
+
+
+def category_detail(request: HttpRequest, pk):
+    category = FoodCategory.objects.get(pk=pk)
+    
+    context = {
+        "category": category
+    }
+
+    return render(request, "category-detail.html", context=context)
+    
+
 
 def login_view(request: HttpRequest):
 
