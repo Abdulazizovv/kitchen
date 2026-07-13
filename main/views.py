@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from main.models import FoodCategory, Food
+from main.models import FoodCategory, Food, FoodComment
 
 
 def index_view(request: HttpRequest):
@@ -18,7 +18,7 @@ def index_view(request: HttpRequest):
 
 def category_detail(request: HttpRequest, pk):
     category = get_object_or_404(FoodCategory, pk=pk)
-    foods = Food.objects.filter(category=category)
+    foods = Food.objects.filter(category=category, is_active=True).order_by("-created_at")
     context = {
         "category": category,
         "foods": foods
@@ -26,6 +26,26 @@ def category_detail(request: HttpRequest, pk):
 
     return render(request, "category-detail.html", context=context)
     
+
+
+def food_detail(request: HttpRequest, pk):
+    food = get_object_or_404(Food, pk=pk)
+
+    if request.method == "POST":
+        body = request.POST.get("body")
+
+        comment = FoodComment.objects.create(
+            food=food,
+            user=request.user,
+            body=body
+        )
+        return redirect("food_detail", pk=food.id)
+
+    context = {
+        "food": food
+    }
+    return render(request, "food-detail.html", context)
+
 
 
 def login_view(request: HttpRequest):

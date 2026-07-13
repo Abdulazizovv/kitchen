@@ -6,6 +6,7 @@ from main.views import (
     signup_view,
 
     category_detail,
+    food_detail,
     )
 
 
@@ -15,5 +16,6 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("signup/", signup_view, name="signup"),
 
-    path("category/<int:pk>/", category_detail, name="category_detail")
+    path("category/<int:pk>/", category_detail, name="category_detail"),
+    path("food/<int:pk>/", food_detail, name="food_detail")
 ]
