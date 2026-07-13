@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
@@ -17,10 +17,11 @@ def index_view(request: HttpRequest):
 
 
 def category_detail(request: HttpRequest, pk):
-    category = FoodCategory.objects.get(pk=pk)
-    
+    category = get_object_or_404(FoodCategory, pk=pk)
+    foods = Food.objects.filter(category=category)
     context = {
-        "category": category
+        "category": category,
+        "foods": foods
     }
 
     return render(request, "category-detail.html", context=context)
